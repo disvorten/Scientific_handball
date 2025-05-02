@@ -14,15 +14,15 @@ public class ConfigReader : ScriptableObject
     public float number_of_stimuls { get; private set; }
     public float value_of_velocity_increase { get; private set; }
     public int experiment_number { get; private set; }
-    public float mass_of_stimul { get; private set; }
+    //public float mass_of_stimul { get; private set; }
     public Vector2 delta_t { get; private set; }
-    public Vector2 delta_before_shoot { get; private set; }
+    //public Vector2 delta_before_shoot { get; private set; }
     public List<float> delta_before_shoot_list { get; private set; }
     public Vector2 stimuls_velocity { get; private set; }
     public List<float> stimuls_velocity_list { get; private set; }
     public List<float> throw_area_for_experiments { get; private set; }
-    public bool is_false_stimuls_exists { get; private set; }
-    public Vector4 target_area { get; private set; }
+   //public bool is_false_stimuls_exists { get; private set; }
+    //public Vector4 target_area { get; private set; }
     public List<Vector3> target_area_list { get; private set; }
 
     public bool use_gravity { get; private set; }
@@ -120,9 +120,9 @@ public class ConfigReader : ScriptableObject
                         case "false_stimuls_percentage":
                             false_stimuls_percentage = float.Parse(lines[i + 1], culture);
                             break;
-                        case "mass_of_stimul":
-                            mass_of_stimul = float.Parse(lines[i + 1], culture);
-                            break;
+                        //case "mass_of_stimul":
+                            //mass_of_stimul = float.Parse(lines[i + 1], culture);
+                            //break;
                         case "delta_t":
                             delta_t = new Vector2(float.Parse(lines[i + 1].Split(delimeter)[0], culture), float.Parse(lines[i + 1].Split(delimeter)[1], culture));
                             break;
@@ -136,7 +136,7 @@ public class ConfigReader : ScriptableObject
                                 }
                             }
                             else
-                                  delta_before_shoot = new Vector2(float.Parse(lines[i + 1].Split(delimeter)[0], culture), float.Parse(lines[i + 1].Split(delimeter)[1], culture));
+                                continue;//delta_before_shoot = new Vector2(float.Parse(lines[i + 1].Split(delimeter)[0], culture), float.Parse(lines[i + 1].Split(delimeter)[1], culture));
                             break;
                         case "throw_area_for_experiments":
                             var list3 = lines[i + 1].Split(delimeter);
@@ -156,13 +156,14 @@ public class ConfigReader : ScriptableObject
                             }
                             else
                                 stimuls_velocity = new Vector2(float.Parse(lines[i + 1].Split(delimeter)[0], culture), float.Parse(lines[i + 1].Split(delimeter)[1], culture));
+                                //continue;
                             break;
-                        case "is_false_stimuls_exists":
-                            is_false_stimuls_exists = bool.Parse(lines[i + 1]);
-                            break;
+                        //case "is_false_stimuls_exists":
+                            //is_false_stimuls_exists = bool.Parse(lines[i + 1]);
+                            //break;
                         case "target_area":
-                            target_area = new Vector4(float.Parse(lines[i + 1].Split(delimeter)[0], culture), float.Parse(lines[i + 1].Split(delimeter)[1], culture), float.Parse(lines[i + 1].Split(delimeter)[2], culture), float.Parse(lines[i + 1].Split(delimeter)[3], culture));
-                            break;
+                            //target_area = new Vector4(float.Parse(lines[i + 1].Split(delimeter)[0], culture), float.Parse(lines[i + 1].Split(delimeter)[1], culture), float.Parse(lines[i + 1].Split(delimeter)[2], culture), float.Parse(lines[i + 1].Split(delimeter)[3], culture));
+                            continue;
                         case "use_gravity":
                             use_gravity = bool.Parse(lines[i + 1]);
                             break;

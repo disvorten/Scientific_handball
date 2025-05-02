@@ -103,10 +103,10 @@ public class Shooter_generator : MonoBehaviour
                 new_shooter.GetComponent<Shooter_controller>().is_false_stimul = is_false_stimuls;
                 new_shooter.GetComponent<Shooter_controller>().velocity = velocity;
                 new_shooter.GetComponent<Shooter_controller>().delta_before_shoot = first_delta;
-                new_shooter.GetComponent<Shooter_controller>().mass_of_stimul = setup_config.config.mass_of_stimul;
+                new_shooter.GetComponent<Shooter_controller>().mass_of_stimul = 0.44f;
                 new_shooter.GetComponent<Shooter_controller>().use_gravity = setup_config.config.use_gravity;
                 new_shooter.GetComponent<Shooter_controller>().diameter_of_stimul = setup_config.config.diameter_of_stimul;
-                new_shooter2.GetComponent<Shooter_controller>().mass_of_stimul = setup_config.config.mass_of_stimul;
+                new_shooter2.GetComponent<Shooter_controller>().mass_of_stimul = 0.44f;
                 new_shooter2.GetComponent<Shooter_controller>().use_gravity = setup_config.config.use_gravity;
                 new_shooter2.GetComponent<Shooter_controller>().diameter_of_stimul = setup_config.config.diameter_of_stimul;
                 if (setup_config.config.experiment_number == 2)
@@ -167,7 +167,7 @@ public class Shooter_generator : MonoBehaviour
                 new_shooter.GetComponent<Shooter_controller>().velocity = velocity;
                 new_shooter.GetComponent<Shooter_controller>().delta_before_shoot = delta_before_shoot;
                 new_shooter.GetComponent<Shooter_controller>().direction = direction;
-                new_shooter.GetComponent<Shooter_controller>().mass_of_stimul = setup_config.config.mass_of_stimul;
+                new_shooter.GetComponent<Shooter_controller>().mass_of_stimul = 0.44f;
                 new_shooter.GetComponent<Shooter_controller>().use_gravity = setup_config.config.use_gravity;
                 new_shooter.GetComponent<Shooter_controller>().diameter_of_stimul = setup_config.config.diameter_of_stimul;
                 new_shooter.GetComponent<Shooter_controller>().surface = surface;
@@ -233,16 +233,12 @@ public class Shooter_generator : MonoBehaviour
         else
             velocity = setup_config.config.stimuls_velocity_list[UnityEngine.Random.Range(0, setup_config.config.stimuls_velocity_list.Count)];
         velocity *= 1f + (setup_config.config.value_of_velocity_increase - 1f) * i / stimuls_number;
-        if (setup_config.config.is_false_stimuls_exists)
-        {
-            System.Random random = new();
-            if ((float)random.NextDouble() < setup_config.config.false_stimuls_percentage / 100f)
-                is_false_stimuls = true;
-            else
-                is_false_stimuls = false;
-        }
-        else is_false_stimuls = false;
-        if(setup_config.config.delta_before_shoot_list.Count != 0)
+        System.Random random = new();
+        if ((float)random.NextDouble() < setup_config.config.false_stimuls_percentage / 100f)
+            is_false_stimuls = true;
+        else
+            is_false_stimuls = false;
+        if (setup_config.config.delta_before_shoot_list.Count != 0)
         {
             var temp =  setup_config.config.delta_before_shoot_list[UnityEngine.Random.Range(0, setup_config.config.delta_before_shoot_list.Count)];
             if (experiment_number == 2)
@@ -256,12 +252,13 @@ public class Shooter_generator : MonoBehaviour
             delta_before_shoot = temp;
             //Debug.Log(delta_before_shoot);
         }
-        else
-            delta_before_shoot = GenerateValueWithRandom(setup_config.config.delta_before_shoot[0], setup_config.config.delta_before_shoot[1]);
+        //else
+            //delta_before_shoot = GenerateValueWithRandom(setup_config.config.delta_before_shoot[0], setup_config.config.delta_before_shoot[1]);
+            
         delta_t = GenerateValueWithRandom(setup_config.config.delta_t[0], setup_config.config.delta_t[1]);
         if (setup_config.config.target_area_list.Count == 0)
         {
-            end_point = GenerateEndPointWithDistribution();
+            //end_point = GenerateEndPointWithDistribution();
         }
         else
         {
@@ -279,24 +276,24 @@ public class Shooter_generator : MonoBehaviour
         direction = end_point - start_point_in_global;
         return Instantiate(shooter, start_point_in_global, Quaternion.identity);
     }
-    private Vector3 GenerateEndPointWithDistribution()
-    {
-        var target_area = setup_config.config.target_area;
-        float x = (float)(0 + target_area[0] / 3.5 * GenerateStdNormal());
-        //Debug.Log("x : " + x);
-        if(x > 0)
-        {
-            x = target_area[0] - x;
-        }
-        else x = - target_area[0] - x;
-        float y = (float)((target_area[2] - target_area[1])/2 + (target_area[2] - target_area[1]) / 7 * GenerateStdNormal());
-        if (y > (target_area[2] - target_area[1])/2)
-        {
-            y = target_area[2] - y + (target_area[2] - target_area[1]) / 2;
-        }
-        //else y = (target_area[2] - target_area[1]) / 2 - (y - target_area[1]);
-        return new Vector3(x, y, -target_area[3]);
-    }
+    //private Vector3 GenerateEndPointWithDistribution()
+    //{
+    //    var target_area = setup_config.config.target_area;
+    //    float x = (float)(0 + target_area[0] / 3.5 * GenerateStdNormal());
+    //    //Debug.Log("x : " + x);
+    //    if(x > 0)
+    //    {
+    //        x = target_area[0] - x;
+    //    }
+    //    else x = - target_area[0] - x;
+    //    float y = (float)((target_area[2] - target_area[1])/2 + (target_area[2] - target_area[1]) / 7 * GenerateStdNormal());
+    //    if (y > (target_area[2] - target_area[1])/2)
+    //    {
+    //        y = target_area[2] - y + (target_area[2] - target_area[1]) / 2;
+    //    }
+    //    //else y = (target_area[2] - target_area[1]) / 2 - (y - target_area[1]);
+    //    return new Vector3(x, y, -target_area[3]);
+    //}
     private Vector3 GenerateStartPointWithDistribution()
     {
         var throw_area = setup_config.config.throw_area;
